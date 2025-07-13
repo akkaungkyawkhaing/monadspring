@@ -1,7 +1,7 @@
 // client/src/App.js
 import React, { useState, useEffect } from 'react';
 // Import icons from lucide-react
-import { Wallet, Search, Clock, DollarSign, Activity, AlertCircle, CheckCircle, Image, ExternalLink, Loader2, Twitter, Github } from 'lucide-react';
+import { Wallet, Search, Clock, Droplets, Activity, AlertCircle, CheckCircle, Image, ExternalLink, Loader2, Twitter, Github } from 'lucide-react';
 
 function App() {
   // Faucet related states
@@ -29,10 +29,9 @@ function App() {
   const [isSearchingExplorer, setIsSearchingExplorer] = useState(false); // NEW: Loading state for Explorer Search
 
   // Base URL for the backend API
-  // const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
   // client/src/App.js
 
-  const API_BASE_URL = 'https://monadspring-9fd378cab39f.herokuapp.com/api' || 'http://localhost:5000/api';
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
 
 
   // --- Cooldown Countdown Timer ---
@@ -196,7 +195,7 @@ function App() {
         {/* Monad Testnet Faucet Section */}
         <section className="bg-gray-900 rounded-lg shadow-inner p-6 border border-purple-700"> {/* Darker background for sections, purple border */}
           <h2 className="text-2xl font-semibold text-gray-200 mb-4 flex items-center justify-center gap-2"> {/* Light gray text */}
-            {/* <DollarSign className="w-6 h-6 text-green-400" /> */}
+            
             <img
               src={process.env.PUBLIC_URL + '/favicon.ico'} // Path to favicon.ico in the public folder
               alt="Monad Spring Icon"
@@ -296,7 +295,7 @@ function App() {
               </>
             ) : (
               <>
-                <DollarSign className="w-5 h-5" />
+                <Droplets className="w-5 h-5" />
                 Get MON Tokens
               </>
             )}
