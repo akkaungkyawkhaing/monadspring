@@ -25,7 +25,11 @@ function App() {
   const [explorerError, setExplorerError] = useState('');
 
   // Base URL for the backend API
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+  // const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+  // client/src/App.js
+
+  const API_BASE_URL = 'https://monadspring-9fd378cab39f.herokuapp.com/api';
+
 
   // --- Cooldown Countdown Timer ---
   useEffect(() => {
