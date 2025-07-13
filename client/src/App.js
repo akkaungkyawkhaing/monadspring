@@ -1,7 +1,7 @@
 // client/src/App.js
 import React, { useState, useEffect } from 'react';
 // Import icons from lucide-react
-import { Wallet, Search, Clock, DollarSign, Activity, AlertCircle, CheckCircle, Image, ExternalLink, Twitter, Github } from 'lucide-react';
+import { Wallet, Search, Clock, DollarSign, Activity, AlertCircle, CheckCircle, Image, ExternalLink, Loader2, Twitter, Github } from 'lucide-react';
 
 function App() {
   // Faucet related states
@@ -9,12 +9,15 @@ function App() {
   const [faucetMessage, setFaucetMessage] = useState('');
   const [faucetError, setFaucetError] = useState('');
   const [cooldownRemaining, setCooldownRemaining] = useState(0); // Cooldown time in milliseconds
+  const [isRequestingTokens, setIsRequestingTokens] = useState(false); // NEW: Loading state for Faucet Request
 
   // New states for NFT Ownership Check
   const [nftCheckAddress, setNftCheckAddress] = useState(''); // User's wallet address for NFT check
   const [hasNFT, setHasNFT] = useState(false);
   const [nftCheckMessage, setNftCheckMessage] = useState('');
   const [nftCheckError, setNftCheckError] = useState('');
+  const [isCheckingNFT, setIsCheckingNFT] = useState(false); // NEW: Loading state for NFT Check
+
   // Placeholder NFT Contract Address (User needs to replace this)
   const REQUIRED_NFT_CONTRACT_ADDRESS = "0x711e498a081bfed449ea047cc28a7fe34f3707ac"; // <<< REPLACE THIS with your deployed ERC-721 NFT contract on Monad Testnet
   const MINT_NFT_LINK = "https://remix.ethereum.org/"; // Generic link to Remix for deploying/minting NFTs
@@ -23,6 +26,7 @@ function App() {
   const [explorerInput, setExplorerInput] = useState('');
   const [explorerResult, setExplorerResult] = useState(null);
   const [explorerError, setExplorerError] = useState('');
+  const [isSearchingExplorer, setIsSearchingExplorer] = useState(false); // NEW: Loading state for Explorer Search
 
   // Base URL for the backend API
   // const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
@@ -56,7 +60,8 @@ function App() {
       setNftCheckError('Invalid wallet address format.');
       return;
     }
-
+    
+    setIsCheckingNFT(true); // CHANGED: Set loading state to true
     try {
       const response = await fetch(`${API_BASE_URL}/check-nft-ownership`, {
         method: 'POST',
@@ -82,6 +87,8 @@ function App() {
     } catch (error) {
       console.error('NFT check error:', error);
       setNftCheckError('Could not connect to the backend for NFT check.');
+    } finally {
+      setIsCheckingNFT(false); // CHANGED: Set loading state to false regardless of success or error
     }
   };
 
@@ -101,6 +108,7 @@ function App() {
       return;
     }
 
+    setIsRequestingTokens(true); // CHANGED: Set loading state to true
     try {
       const response = await fetch(`${API_BASE_URL}/faucet`, {
         method: 'POST',
@@ -121,6 +129,8 @@ function App() {
     } catch (error) {
       console.error('Faucet request error:', error);
       setFaucetError('Could not connect to the backend or request failed. Please check server status.');
+    } finally {
+      setIsRequestingTokens(false); // CHANGED: Set loading state to false
     }
   };
 
@@ -142,6 +152,8 @@ function App() {
       return;
     }
 
+    // CHANGED: Set loading state to true before API call
+    setIsSearchingExplorer(true); 
     try {
       let response;
       if (explorerInput.startsWith('0x') && explorerInput.length === 66) {
@@ -162,6 +174,9 @@ function App() {
     } catch (error) {
       console.error('Explorer search error:', error);
       setExplorerError('Could not connect to the backend or search failed.');
+    } finally {
+      // CHANGED: Set loading state to false after API call
+      setIsSearchingExplorer(false); 
     }
   };
 
@@ -181,7 +196,12 @@ function App() {
         {/* Monad Testnet Faucet Section */}
         <section className="bg-gray-900 rounded-lg shadow-inner p-6 border border-purple-700"> {/* Darker background for sections, purple border */}
           <h2 className="text-2xl font-semibold text-gray-200 mb-4 flex items-center justify-center gap-2"> {/* Light gray text */}
-            <DollarSign className="w-6 h-6 text-green-400" /> {/* Green for clarity */}
+            {/* <DollarSign className="w-6 h-6 text-green-400" /> */}
+            <img
+              src={process.env.PUBLIC_URL + '/favicon.ico'} // Path to favicon.ico in the public folder
+              alt="Monad Spring Icon"
+              className="w-6 h-6 text-green-400" // Apply Tailwind classes for sizing
+            />
             Monad Testnet Faucet
           </h2>
           <p className="text-gray-400 mb-4 text-sm md:text-base"> {/* Lighter gray text */}
@@ -208,14 +228,19 @@ function App() {
               className="w-full p-3 mb-3 border border-purple-500 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-purple-400 focus:outline-none"
               value={nftCheckAddress}
               onChange={(e) => setNftCheckAddress(e.target.value)}
-              disabled={hasNFT}
+              disabled={hasNFT || isCheckingNFT} // CHANGED: Disable input while checking NFT
             />
             <button
               onClick={handleCheckNFT}
-              disabled={hasNFT || !nftCheckAddress || nftCheckAddress.length !== 42 || !nftCheckAddress.startsWith('0x')}
+              disabled={hasNFT || !nftCheckAddress || nftCheckAddress.length !== 42 || !nftCheckAddress.startsWith('0x') || isCheckingNFT} // CHANGED: Disable if checking NFT
               className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg font-bold text-md hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {hasNFT ? (
+              {isCheckingNFT ? ( // CHANGED: Show loading spinner and text if checking
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Checking NFT...
+                </>
+              ) : hasNFT ? (
                 <>
                   <CheckCircle className="w-5 h-5" />
                   NFT Owned!
@@ -252,14 +277,19 @@ function App() {
             className="w-full p-3 mb-4 border border-purple-500 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-purple-400 focus:outline-none" 
             value={faucetAddress}
             onChange={(e) => setFaucetAddress(e.target.value)}
-            disabled={!hasNFT}
+            disabled={!hasNFT || isRequestingTokens} // CHANGED: Disable input while requesting tokens
           />
           <button
             onClick={handleFaucetRequest}
-            disabled={cooldownRemaining > 0 || !hasNFT || !faucetAddress || faucetAddress.length !== 42 || !faucetAddress.startsWith('0x')}
+            disabled={cooldownRemaining > 0 || !hasNFT || !faucetAddress || faucetAddress.length !== 42 || !faucetAddress.startsWith('0x') || isRequestingTokens} // CHANGED: Disable if requesting tokens
             className="w-full bg-purple-700 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-800 transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
           >
-            {cooldownRemaining > 0 ? (
+            {isRequestingTokens ? ( // CHANGED: Show loading spinner and text if requesting
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Requesting...
+              </>
+            ) : cooldownRemaining > 0 ? (
               <>
                 <Clock className="w-5 h-5" />
                 Please Wait: {formatTime(cooldownRemaining)}
@@ -297,13 +327,24 @@ function App() {
             className="w-full p-3 mb-4 border border-purple-500 rounded-md bg-gray-700 text-white focus:ring-2 focus:ring-purple-400 focus:outline-none" 
             value={explorerInput}
             onChange={(e) => setExplorerInput(e.target.value)}
+            disabled={isSearchingExplorer} // CHANGED: Disable input while searching
           />
           <button
             onClick={handleExplorerSearch}
+            disabled={!explorerInput || isSearchingExplorer} // CHANGED: Disable if searching
             className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
           >
-            <Search className="w-5 h-5" />
-            Search
+            {isSearchingExplorer ? ( // CHANGED: Show loading spinner and text if searching
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Searching...
+              </>
+            ) : (
+              <>
+                <Search className="w-5 h-5" />
+                Search
+              </>
+            )}
           </button>
           {explorerResult ? (
             <div className="explorer-results text-left mt-6 pt-4 border-t border-purple-600 text-gray-300 space-y-2"> {/* Purple border, light gray text */}
