@@ -43,6 +43,10 @@ console.log('Wallet instance of ethers.Wallet?', wallet instanceof ethers.Wallet
 console.log('Does ethers.Wallet.prototype have getBalance method?', typeof ethers.Wallet.prototype.getBalance);
 console.log('--- End Initial Wallet Debugging ---');
 
+// Basic root route for testing - NEW
+app.get('/', (req, res) => {
+    res.send('Monad Spring Backend is running! Access API at /api/faucet, /api/explorer, etc.');
+});
 
 // Store request data per address (This is an in-memory map and will reset if the server restarts)
 const addressData = new Map();
