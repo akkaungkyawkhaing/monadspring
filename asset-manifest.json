@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/monadspring/static/css/main.e6c13ad2.css",
-    "main.js": "/monadspring/static/js/main.153c8ac8.js",
+    "main.js": "/monadspring/static/js/main.e3a8f18f.js",
     "static/js/453.a3c1d153.chunk.js": "/monadspring/static/js/453.a3c1d153.chunk.js",
     "index.html": "/monadspring/index.html",
     "main.e6c13ad2.css.map": "/monadspring/static/css/main.e6c13ad2.css.map",
-    "main.153c8ac8.js.map": "/monadspring/static/js/main.153c8ac8.js.map",
+    "main.e3a8f18f.js.map": "/monadspring/static/js/main.e3a8f18f.js.map",
     "453.a3c1d153.chunk.js.map": "/monadspring/static/js/453.a3c1d153.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.153c8ac8.js"
+    "static/js/main.e3a8f18f.js"
   ]
 }
