@@ -12,9 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({
-    origin: 'https://akkaungkyawkhaing.github.io'
-})); // Allow frontend to make requests from a different origin
+app.use(cors({})); // Allow frontend to make requests from a different origin
 app.use(express.json()); // To parse JSON request bodies
 
 // Monad Testnet Configuration
