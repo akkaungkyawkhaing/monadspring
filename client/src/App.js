@@ -19,7 +19,7 @@ function App() {
   const [isCheckingNFT, setIsCheckingNFT] = useState(false); // NEW: Loading state for NFT Check
 
   // Placeholder NFT Contract Address (User needs to replace this)
-  const REQUIRED_NFT_CONTRACT_ADDRESS = "0x1261a060D367533a5f50f2deE601Fb82477D309f"; // <<< REPLACE THIS with your deployed ERC-721 NFT contract on Monad Testnet
+  const REQUIRED_NFT_CONTRACT_ADDRESS = "0xFc983B762D564dD6388983BB45D2E59C46805DB2"; // <<< REPLACE THIS with your deployed ERC-721 NFT contract on Monad Testnet
   const MINT_NFT_LINK = "https://opals.io/markets/0x1261a060D367533a5f50f2deE601Fb82477D309f"; // Generic link to Remix for deploying/minting NFTs
 
   // Explorer related states
@@ -32,6 +32,7 @@ function App() {
   // client/src/App.js
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+  // const API_BASE_URL = 'https://monadspring-9fd378cab39f.herokuapp.com/api' || 'http://localhost:5000/api';
 
 
   // --- Cooldown Countdown Timer ---
