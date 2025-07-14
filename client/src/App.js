@@ -19,8 +19,8 @@ function App() {
   const [isCheckingNFT, setIsCheckingNFT] = useState(false); // NEW: Loading state for NFT Check
 
   // Placeholder NFT Contract Address (User needs to replace this)
-  const REQUIRED_NFT_CONTRACT_ADDRESS = "0x711e498a081bfed449ea047cc28a7fe34f3707ac"; // <<< REPLACE THIS with your deployed ERC-721 NFT contract on Monad Testnet
-  const MINT_NFT_LINK = "https://remix.ethereum.org/"; // Generic link to Remix for deploying/minting NFTs
+  const REQUIRED_NFT_CONTRACT_ADDRESS = "0x1261a060D367533a5f50f2deE601Fb82477D309f"; // <<< REPLACE THIS with your deployed ERC-721 NFT contract on Monad Testnet
+  const MINT_NFT_LINK = "https://opals.io/markets/0x1261a060D367533a5f50f2deE601Fb82477D309f"; // Generic link to Remix for deploying/minting NFTs
 
   // Explorer related states
   const [explorerInput, setExplorerInput] = useState('');
@@ -330,7 +330,7 @@ function App() {
           />
           <button
             onClick={handleExplorerSearch}
-            disabled={!explorerInput || isSearchingExplorer} // CHANGED: Disable if searching
+            disabled={!explorerInput || isSearchingExplorer || !explorerInput.startsWith('0x')} // CHANGED: Disable if searching
             className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105 disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2" 
           >
             {isSearchingExplorer ? ( // CHANGED: Show loading spinner and text if searching

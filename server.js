@@ -113,7 +113,7 @@ app.post('/api/faucet', async (req, res) => {
     // --- IMPORTANT: Internal NFT Check (Backend-side validation) ---
     // This check is crucial to ensure that even if frontend validation is bypassed,
     // the backend still enforces the NFT ownership rule.
-    const REQUIRED_NFT_CONTRACT_ADDRESS_BACKEND = "0x711e498a081bfed449ea047cc28a7fe34f3707ac"; // <<< MUST BE THE SAME AS FRONTEND
+    const REQUIRED_NFT_CONTRACT_ADDRESS_BACKEND = "0x1261a060D367533a5f50f2deE601Fb82477D309f"; // <<< MUST BE THE SAME AS FRONTEND
     try {
         const nftContract = new ethers.Contract(REQUIRED_NFT_CONTRACT_ADDRESS_BACKEND, ERC721_ABI, provider);
         const nftBalance = await nftContract.balanceOf(address); // Check NFT balance of the recipient address
