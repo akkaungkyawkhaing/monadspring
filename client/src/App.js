@@ -205,7 +205,7 @@ function App() {
             Monad Testnet Faucet
           </h2>
           <p className="text-gray-400 mb-4 text-sm md:text-base"> {/* Lighter gray text */}
-            Get <strong className="font-semibold text-white">0.01 MON</strong> token per request. Daily limit: <strong className="font-semibold text-white">0.01 MON</strong> per address. Cooldown: <strong className="font-semibold text-white">24 hours</strong>.
+            Get <strong className="font-semibold text-white">0.05 MON</strong> token per request. Daily limit: <strong className="font-semibold text-white">0.05 MON</strong> per address. Cooldown: <strong className="font-semibold text-white">24 hours</strong>.
           </p>
 
           {/* NFT Ownership Check Section */}

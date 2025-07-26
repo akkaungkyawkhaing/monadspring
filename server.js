@@ -20,8 +20,8 @@ const MONAD_RPC_URL = process.env.MONAD_RPC_URL || 'https://testnet-rpc.monad.xy
 const FAUCET_PRIVATE_KEY = process.env.FAUCET_PRIVATE_KEY; // !!! Store this securely, preferably in .env
 
 // Faucet Rules Configuration
-const TOKEN_TO_DISTRIBUTE_PER_REQUEST = ethers.parseEther("0.01"); // Each request gives 0.01 MON
-const DAILY_MON_LIMIT_PER_ADDRESS = ethers.parseEther("0.01");     // Max 0.01 MON per address per day
+const TOKEN_TO_DISTRIBUTE_PER_REQUEST = ethers.parseEther("0.05"); // Each request gives 0.01 MON
+const DAILY_MON_LIMIT_PER_ADDRESS = ethers.parseEther("0.05");     // Max 0.01 MON per address per day
 const COOLDOWN_SECONDS = 24 * 60 * 60; // 24 hours (in seconds) cooldown for each address
 
 // Ensure private key is set for faucet
